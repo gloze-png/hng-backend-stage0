@@ -4,9 +4,11 @@ header("Content-Type: application/json");
 
 // Validate input
 if (!isset($_GET['number']) || !is_numeric($_GET['number'])) {
-    print json_encode(["error" => "Invalid or missing number parameter"]);
+    print json_encode(["error" =>true,  
+                        "number" => "boy"]);
     exit;
 }
+
 
 $number = intval($_GET['number']);
 
@@ -39,10 +41,12 @@ function is_armstrong($num) {
     return $sum === $num;
 }
 
-// Sum of digits
+// Sum of digits (handles negative numbers correctly)
 function digit_sum($num) {
-    return array_sum(str_split((string) $num));
+    $num = abs($num); // Convert negative number to positive
+    return array_sum(array_map('intval', str_split((string) $num)));
 }
+
 
 // Function to generate a fun fact
 function fetch_fun_fact($num) {
@@ -70,8 +74,8 @@ $response = [
     "is_prime" => is_prime($number),
     "is_perfect" => is_perfect($number),
     "properties" => $properties,
-    "digit_sum" => digit_sum($number),
-    "fun_fact" => fetch_fun_fact($number)
+    "digit_sum" => digit_sum($number), // sum of its digits
+    "fun_fact" => fetch_fun_fact($number) //gotten from the numbers API
 ];
 
 print json_encode($response, JSON_PRETTY_PRINT);
