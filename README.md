@@ -45,7 +45,8 @@ GET /index.php?number=371
 If the `number` parameter is missing or invalid, the API returns:
 ```json
 {
-    "error": "Invalid or missing number parameter"
+  "error": true,
+  "number": "boy"
 }
 ```
 
